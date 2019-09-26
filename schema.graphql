@@ -1,0 +1,73 @@
+type Factory @entity {
+  id: ID!
+  count: BigInt!
+  moloch: Bytes! # address
+  summoner: Bytes! # address
+  title: String
+  newContract: String
+}
+
+type Vote @entity {
+  id: ID!
+  molochAddress: Bytes!
+  timestamp:String!
+  proposalIndex:BigInt!
+  delegateKey: Bytes!
+  memberAddress: Bytes!
+  uintVote: Int!
+  proposal: Proposal!
+  member: Member!
+}
+
+type Proposal @entity {
+  id: ID!
+  molochAddress: Bytes!
+  timestamp:String!
+  proposalIndex: BigInt!
+  startingPeriod: BigInt!
+  delegateKey: Bytes!
+  member: Member!
+  memberAddress: Bytes!
+  applicant: Applicant!
+  applicantAddress: Bytes!
+  tokenTribute: BigInt!
+  sharesRequested:BigInt!
+  yesVotes: BigInt!
+  noVotes: BigInt!
+  processed: Boolean!
+  didPass: Boolean!
+  aborted: Boolean!
+  votes: [Vote!]!
+  details: String!
+  maxTotalSharesAtYesVote: BigInt!
+}
+
+type Applicant @entity {
+  id: ID!
+  molochAddress: Bytes!
+  timestamp:String!
+  proposalIndex: BigInt!
+  delegateKey: Bytes!
+  member: Member!
+  memberAddress: Bytes!
+  applicantAddress: Bytes!
+  tokenTribute: BigInt!
+  sharesRequested:BigInt!
+  didPass: Boolean!
+  aborted: Boolean!
+  votes: [Vote!]! 
+  proposal: Proposal!
+}
+
+type Member @entity {
+  id: ID!
+  molochAddress: Bytes!
+  delegateKey: Bytes!
+  shares: BigInt!
+  isActive: Boolean!
+  highestIndexYesVote: BigInt!
+  tokenTribute: BigInt!
+  didRagequit: Boolean!
+  votes: [Vote!]!
+  submissions: [Proposal!]!
+}

@@ -1,0 +1,56 @@
+specVersion: 0.0.3
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: kovan
+    source:
+      address: "0x05Caefd19EB07b9E1b008E5069D2c529C1035744"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Register
+      abis:
+        - name: Contract
+          file: Contract/abis/Contract.json
+      eventHandlers:
+        - event: Register(address,indexed address,uint256,string,uint256)
+          handler: handleRegister
+      file: Contract/Contract.wasm
+templates:
+  - kind: ethereum/contract
+    name: Moloch
+    network: kovan
+    source:
+      abi: Moloch
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      file: templates/Moloch/Moloch.wasm
+      entities:
+        - Proposal
+      abis:
+        - name: Moloch
+          file: Moloch/abis/Moloch.json
+      eventHandlers:
+        - event: SummonComplete(indexed address,uint256)
+          handler: handleSummonComplete
+        - event: SubmitProposal(uint256,indexed address,indexed address,indexed
+            address,uint256,uint256)
+          handler: handleSubmitProposal
+        - event: SubmitVote(indexed uint256,indexed address,indexed address,uint8)
+          handler: handleSubmitVote
+        - event: ProcessProposal(indexed uint256,indexed address,indexed
+            address,uint256,uint256,bool)
+          handler: handleProcessProposal
+        - event: Ragequit(indexed address,uint256)
+          handler: handleRagequit
+        - event: Abort(indexed uint256,address)
+          handler: handleAbort
+        - event: UpdateDelegateKey(indexed address,address)
+          handler: handleUpdateDelegateKey
