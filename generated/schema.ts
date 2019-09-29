@@ -42,6 +42,23 @@ export class Factory extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get index(): string | null {
+    let value = this.get("index");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set index(value: string | null) {
+    if (value === null) {
+      this.unset("index");
+    } else {
+      this.set("index", Value.fromString(value as string));
+    }
+  }
+
   get count(): BigInt {
     let value = this.get("count");
     return value.toBigInt();

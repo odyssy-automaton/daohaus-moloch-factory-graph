@@ -1,5 +1,6 @@
 type Factory @entity {
   id: ID!
+  index: String
   count: BigInt!
   moloch: Bytes! # address
   summoner: Bytes! # address

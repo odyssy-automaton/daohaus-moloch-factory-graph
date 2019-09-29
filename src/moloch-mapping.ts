@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, log } from "@graphprotocol/graph-ts";
 import {
   Moloch as Contract,
   SummonComplete,
@@ -10,8 +10,18 @@ import {
   UpdateDelegateKey
 } from "./types/Moloch/Moloch";
 import { Proposal, Member, Vote, Applicant } from "./types/schema";
+import { Factory } from "../generated/schema";
 
 export function handleSummonComplete(event: SummonComplete): void {
+  let factory = Factory.load(event.address.toHex());
+  log.info("++++++++ summon complete. moloch: {}, factory.newContract: {}", [
+    event.address.toHex(),
+    factory.newContract
+  ]);
+  if (factory.newContract == "0") {
+    return;
+  }
+
   let memberId = event.address
     .toHex()
     .concat("-")
@@ -31,6 +41,12 @@ export function handleSummonComplete(event: SummonComplete): void {
 }
 
 export function handleSubmitProposal(event: SubmitProposal): void {
+  let factory = Factory.load(event.address.toHex());
+  // log.info("++++++++ factory.newContract: {}", [factory.newContract]);
+  if (factory.newContract == "0") {
+    return;
+  }
+
   // get information directly from contract
   // struct Proposal {
   //     address proposer; // the member who submitted the proposal
@@ -115,6 +131,12 @@ export function handleSubmitProposal(event: SubmitProposal): void {
 }
 
 export function handleSubmitVote(event: SubmitVote): void {
+  let factory = Factory.load(event.address.toHex());
+  // log.info("++++++++ factory.newContract: {}", [factory.newContract]);
+  if (factory.newContract == "0") {
+    return;
+  }
+
   let voteID = event.params.memberAddress
     .toHex()
     .concat("-")
@@ -176,6 +198,12 @@ export function handleSubmitVote(event: SubmitVote): void {
 }
 
 export function handleProcessProposal(event: ProcessProposal): void {
+  let factory = Factory.load(event.address.toHex());
+  // log.info("++++++++ factory.newContract: {}", [factory.newContract]);
+  if (factory.newContract == "0") {
+    return;
+  }
+
   let proposalId = event.address
     .toHex()
     .concat("-")
@@ -229,6 +257,12 @@ export function handleProcessProposal(event: ProcessProposal): void {
 }
 
 export function handleRagequit(event: Ragequit): void {
+  let factory = Factory.load(event.address.toHex());
+  // log.info("++++++++ factory.newContract: {}", [factory.newContract]);
+  if (factory.newContract == "0") {
+    return;
+  }
+
   let memberId = event.address
     .toHex()
     .concat("-")
@@ -244,6 +278,12 @@ export function handleRagequit(event: Ragequit): void {
 }
 
 export function handleAbort(event: Abort): void {
+  let factory = Factory.load(event.address.toHex());
+  // log.info("++++++++ factory.newContract: {}", [factory.newContract]);
+  if (factory.newContract == "0") {
+    return;
+  }
+
   let proposalId = event.address
     .toHex()
     .concat("-")
@@ -266,6 +306,15 @@ export function handleAbort(event: Abort): void {
 }
 
 export function handleUpdateDelegateKey(event: UpdateDelegateKey): void {
+  let factory = Factory.load(event.address.toHexString());
+  log.info(
+    "++++++++ update delegate. moloch: {}, factory.newContract: {}, factory.moloch: {}",
+    [event.address.toHex(), factory.newContract, factory.moloch.toHexString()]
+  );
+  if (factory.newContract == "0") {
+    return;
+  }
+
   let memberId = event.address
     .toHex()
     .concat("-")

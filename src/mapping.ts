@@ -1,13 +1,12 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, log } from "@graphprotocol/graph-ts";
 import { Contract, Register } from "../generated/Contract/Contract";
 import { Factory } from "../generated/schema";
 import { Moloch } from "../generated/templates";
-import { log } from "@graphprotocol/graph-ts";
 
 export function handleRegister(event: Register): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-  let entity = Factory.load(event.transaction.from.toHex());
+  let entity = Factory.load(event.params.moloch.toHexString());
 
   log.info("**************** event fired. contract address: {}", [
     event.params.moloch.toHexString()
@@ -16,7 +15,7 @@ export function handleRegister(event: Register): void {
   // Entities only exist after they have been saved to the store;
   // `null` checks allow to create entities on demand
   if (entity == null) {
-    entity = new Factory(event.transaction.from.toHex());
+    entity = new Factory(event.params.moloch.toHexString());
 
     // Entity fields can be set using simple assignments
     entity.count = BigInt.fromI32(0);
@@ -29,7 +28,7 @@ export function handleRegister(event: Register): void {
   entity.moloch = event.params.moloch;
   entity.summoner = event.params.summoner;
   entity.title = event.params.title;
-  entity.id = event.params.daoIdx.toString();
+  entity.index = event.params.daoIdx.toString();
   entity.newContract = event.params.newContract.toString();
 
   Moloch.create(event.params.moloch);
