@@ -24,7 +24,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Moloch
-    network: kovan
+    network: mainnet
     source:
       abi: Moloch
     mapping:
