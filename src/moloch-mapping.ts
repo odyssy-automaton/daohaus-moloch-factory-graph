@@ -63,10 +63,22 @@ export function handleSubmitProposal(event: SubmitProposal): void {
   //     uint256 maxTotalSharesAtYesVote; // the maximum # of total shares encountered at a yes vote on this proposal
   //     mapping (address => Vote) votesByMember; // the votes on this proposal by each member
   // }
+
+  log.info("++++++++ logging event address before contract call: {}, {}", [
+    event.address.toHex(),
+    event.params.proposalIndex.toString()
+  ]);
+
+
   let contract = Contract.bind(event.address);
   let proposalFromContract = contract.proposalQueue(event.params.proposalIndex);
   let startingPeriod = proposalFromContract.value3;
   let details = proposalFromContract.value10;
+
+  log.info("++++++++ logging proposalFromContract data: {}, {}", [
+    proposalFromContract.value3.toString(),
+    proposalFromContract.value10
+  ]);
 
   // let proposal = new Proposal(event.params.proposalIndex.toString());
   let proposalId = event.address

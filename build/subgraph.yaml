@@ -1,4 +1,4 @@
-specVersion: 0.0.3
+specVersion: 0.0.2
 schema:
   file: schema.graphql
 dataSources:
@@ -29,7 +29,7 @@ templates:
       abi: Moloch
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.2
+      apiVersion: 0.0.3
       language: wasm/assemblyscript
       file: templates/Moloch/Moloch.wasm
       entities:
