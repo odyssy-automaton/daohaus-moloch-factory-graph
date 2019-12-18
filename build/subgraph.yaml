@@ -8,6 +8,7 @@ dataSources:
     source:
       address: "0x0C60Cd59f42093c7489BA68BAA4d7A01f2468153"
       abi: Contract
+      startBlock: 14980879
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -17,14 +18,18 @@ dataSources:
       abis:
         - name: Contract
           file: Contract/abis/Contract.json
+        - name: Moloch
+          file: Contract/abis/Moloch.json
       eventHandlers:
         - event: Register(address,indexed address,uint256,string,uint256)
           handler: handleRegister
+      blockHandlers:
+        - handler: handleBlock
       file: Contract/Contract.wasm
 templates:
   - kind: ethereum/contract
     name: Moloch
-    network: mainnet
+    network: kovan
     source:
       abi: Moloch
     mapping:

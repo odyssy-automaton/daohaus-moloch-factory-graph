@@ -8,11 +8,17 @@ type Factory @entity {
   newContract: String
 }
 
+type MolochList @entity {
+  id: ID!
+  count: Int!
+  molochAddresses: [Bytes!]!
+}
+
 type Vote @entity {
   id: ID!
   molochAddress: Bytes!
-  timestamp:String!
-  proposalIndex:BigInt!
+  timestamp: String!
+  proposalIndex: BigInt!
   delegateKey: Bytes!
   memberAddress: Bytes!
   uintVote: Int!
@@ -23,7 +29,7 @@ type Vote @entity {
 type Proposal @entity {
   id: ID!
   molochAddress: Bytes!
-  timestamp:String!
+  timestamp: String!
   proposalIndex: BigInt!
   startingPeriod: BigInt!
   delegateKey: Bytes!
@@ -32,7 +38,7 @@ type Proposal @entity {
   applicant: Applicant!
   applicantAddress: Bytes!
   tokenTribute: BigInt!
-  sharesRequested:BigInt!
+  sharesRequested: BigInt!
   yesVotes: BigInt!
   noVotes: BigInt!
   processed: Boolean!
@@ -40,23 +46,23 @@ type Proposal @entity {
   aborted: Boolean!
   votes: [Vote!]!
   details: String!
-  maxTotalSharesAtYesVote: BigInt!
+  maxTotalSharesAtYesVote: BigInt
 }
 
 type Applicant @entity {
   id: ID!
   molochAddress: Bytes!
-  timestamp:String!
+  timestamp: String!
   proposalIndex: BigInt!
   delegateKey: Bytes!
   member: Member!
   memberAddress: Bytes!
   applicantAddress: Bytes!
   tokenTribute: BigInt!
-  sharesRequested:BigInt!
+  sharesRequested: BigInt!
   didPass: Boolean!
   aborted: Boolean!
-  votes: [Vote!]! 
+  votes: [Vote!]!
   proposal: Proposal!
 }
 
@@ -66,9 +72,15 @@ type Member @entity {
   delegateKey: Bytes!
   shares: BigInt!
   isActive: Boolean!
-  highestIndexYesVote: BigInt!
+  highestIndexYesVote: BigInt
   tokenTribute: BigInt!
   didRagequit: Boolean!
   votes: [Vote!]!
   submissions: [Proposal!]!
+}
+
+type Meta @entity {
+  id: ID!
+  currentPeriod: BigInt!
+  totalShares: BigInt!
 }

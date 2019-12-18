@@ -1,4 +1,9 @@
-import { BigInt, log } from "@graphprotocol/graph-ts";
+import {
+  BigInt,
+  log,
+  EthereumBlock,
+  dataSource
+} from "@graphprotocol/graph-ts";
 import {
   Moloch as Contract,
   SummonComplete,
@@ -10,7 +15,26 @@ import {
   UpdateDelegateKey
 } from "./types/Moloch/Moloch";
 import { Proposal, Member, Vote, Applicant } from "./types/schema";
-import { Factory } from "../generated/schema";
+import { Factory, Meta } from "../generated/schema";
+
+export function handleBlock(block: EthereumBlock): void {
+  // let molochAddress = dataSource.address();
+  // let factoryContract = Contract.bind(molochAddress);
+  // let events = factoryContract.events
+  // log.debug("molochAddress: {}", [
+  //   molochAddress.toHexString() // "0x..."
+  // ]);
+  // let contract = Contract.bind(molochAddress);
+  // let currentPeriod = contract.getCurrentPeriod();
+  // let totalShares = contract.totalShares();
+  // let meta = Meta.load(molochAddress.toHexString());
+  // if (!meta) {
+  //   meta = new Meta(molochAddress.toHexString());
+  // }
+  // meta.currentPeriod = currentPeriod;
+  // meta.totalShares = totalShares;
+  // meta.save();
+}
 
 export function handleSummonComplete(event: SummonComplete): void {
   let factory = Factory.load(event.address.toHex());
@@ -68,7 +92,6 @@ export function handleSubmitProposal(event: SubmitProposal): void {
     event.address.toHex(),
     event.params.proposalIndex.toString()
   ]);
-
 
   let contract = Contract.bind(event.address);
   let proposalFromContract = contract.proposalQueue(event.params.proposalIndex);

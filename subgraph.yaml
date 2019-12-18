@@ -10,6 +10,8 @@ dataSources:
       # address: "0x2840d12d926cc686217bb42b80b662c7d72ee787"
       address: "0x0C60Cd59f42093c7489BA68BAA4d7A01f2468153"
       abi: Contract
+      # startBlock: 8625248
+      startBlock: 14980879
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -19,49 +21,47 @@ dataSources:
       abis:
         - name: Contract
           file: ./abis/Contract.json
+        - name: Moloch
+          file: ./abis/Moloch.json
       eventHandlers:
         - event: Register(address,indexed address,uint256,string,uint256)
           handler: handleRegister
+      blockHandlers:
+        - handler: handleBlock
       file: ./src/mapping.ts
 templates:
   - kind: ethereum/contract
     name: Moloch
-    network: mainnet
+    # network: mainnet
+    network: kovan
     source:
       abi: Moloch
+      # startBlock: 8625248
+      # startBlock: 14980879
     mapping:
-      - kind: ethereum/events
-        apiVersion: 0.0.3
-        language: wasm/assemblyscript
-        file: ./src/moloch-mapping.ts
-        entities:
-          - Proposal
-        abis:
-          - name: Moloch
-            file: ./abis/Moloch.json
-        eventHandlers:
-          - event: SummonComplete(indexed address,uint256)
-            handler: handleSummonComplete
-          - event: SubmitProposal(uint256,indexed address,indexed address,indexed address,uint256,uint256)
-            handler: handleSubmitProposal
-          - event: SubmitVote(indexed uint256,indexed address,indexed address,uint8)
-            handler: handleSubmitVote
-          - event: ProcessProposal(indexed uint256,indexed address,indexed address,uint256,uint256,bool)
-            handler: handleProcessProposal
-          - event: Ragequit(indexed address,uint256)
-            handler: handleRagequit
-          - event: Abort(indexed uint256,address)
-            handler: handleAbort
-          - event: UpdateDelegateKey(indexed address,address)
-            handler: handleUpdateDelegateKey
-      - kind: ethereum/events
-        apiVersion: 0.0.3
-        language: wasm/assemblyscript
-        file: ./src/block-mapping.ts
-        entities:
-          - BankHistory
-        abis:
-          - name: Moloch
-            file: ./abis/Moloch.json
-      blockHandlers:
-        - handler: handleBlock
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/moloch-mapping.ts
+      entities:
+        - Proposal
+      abis:
+        - name: Moloch
+          file: ./abis/Moloch.json
+      eventHandlers:
+        - event: SummonComplete(indexed address,uint256)
+          handler: handleSummonComplete
+        - event: SubmitProposal(uint256,indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleSubmitProposal
+        - event: SubmitVote(indexed uint256,indexed address,indexed address,uint8)
+          handler: handleSubmitVote
+        - event: ProcessProposal(indexed uint256,indexed address,indexed address,uint256,uint256,bool)
+          handler: handleProcessProposal
+        - event: Ragequit(indexed address,uint256)
+          handler: handleRagequit
+        - event: Abort(indexed uint256,address)
+          handler: handleAbort
+        - event: UpdateDelegateKey(indexed address,address)
+          handler: handleUpdateDelegateKey
+      # blockHandlers:
+      #   - handler: handleBlock

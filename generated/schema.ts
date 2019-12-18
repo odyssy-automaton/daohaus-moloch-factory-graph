@@ -121,6 +121,55 @@ export class Factory extends Entity {
   }
 }
 
+export class MolochList extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save MolochList entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save MolochList entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("MolochList", id.toString(), this);
+  }
+
+  static load(id: string): MolochList | null {
+    return store.get("MolochList", id) as MolochList | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get count(): i32 {
+    let value = this.get("count");
+    return value.toI32();
+  }
+
+  set count(value: i32) {
+    this.set("count", Value.fromI32(value));
+  }
+
+  get molochAddresses(): Array<Bytes> {
+    let value = this.get("molochAddresses");
+    return value.toBytesArray();
+  }
+
+  set molochAddresses(value: Array<Bytes>) {
+    this.set("molochAddresses", Value.fromBytesArray(value));
+  }
+}
+
 export class Vote extends Entity {
   constructor(id: string) {
     super();
@@ -416,13 +465,21 @@ export class Proposal extends Entity {
     this.set("details", Value.fromString(value));
   }
 
-  get maxTotalSharesAtYesVote(): BigInt {
+  get maxTotalSharesAtYesVote(): BigInt | null {
     let value = this.get("maxTotalSharesAtYesVote");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set maxTotalSharesAtYesVote(value: BigInt) {
-    this.set("maxTotalSharesAtYesVote", Value.fromBigInt(value));
+  set maxTotalSharesAtYesVote(value: BigInt | null) {
+    if (value === null) {
+      this.unset("maxTotalSharesAtYesVote");
+    } else {
+      this.set("maxTotalSharesAtYesVote", Value.fromBigInt(value as BigInt));
+    }
   }
 }
 
@@ -640,13 +697,21 @@ export class Member extends Entity {
     this.set("isActive", Value.fromBoolean(value));
   }
 
-  get highestIndexYesVote(): BigInt {
+  get highestIndexYesVote(): BigInt | null {
     let value = this.get("highestIndexYesVote");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set highestIndexYesVote(value: BigInt) {
-    this.set("highestIndexYesVote", Value.fromBigInt(value));
+  set highestIndexYesVote(value: BigInt | null) {
+    if (value === null) {
+      this.unset("highestIndexYesVote");
+    } else {
+      this.set("highestIndexYesVote", Value.fromBigInt(value as BigInt));
+    }
   }
 
   get tokenTribute(): BigInt {
@@ -683,5 +748,54 @@ export class Member extends Entity {
 
   set submissions(value: Array<string>) {
     this.set("submissions", Value.fromStringArray(value));
+  }
+}
+
+export class Meta extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Meta entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Meta entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Meta", id.toString(), this);
+  }
+
+  static load(id: string): Meta | null {
+    return store.get("Meta", id) as Meta | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get currentPeriod(): BigInt {
+    let value = this.get("currentPeriod");
+    return value.toBigInt();
+  }
+
+  set currentPeriod(value: BigInt) {
+    this.set("currentPeriod", Value.fromBigInt(value));
+  }
+
+  get totalShares(): BigInt {
+    let value = this.get("totalShares");
+    return value.toBigInt();
+  }
+
+  set totalShares(value: BigInt) {
+    this.set("totalShares", Value.fromBigInt(value));
   }
 }

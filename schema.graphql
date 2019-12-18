@@ -8,6 +8,12 @@ type Factory @entity {
   newContract: String
 }
 
+type MolochList @entity {
+  id: ID!
+  count: Int!
+  molochAddresses: [Bytes!]!
+}
+
 type Vote @entity {
   id: ID!
   molochAddress: Bytes!
@@ -40,7 +46,7 @@ type Proposal @entity {
   aborted: Boolean!
   votes: [Vote!]!
   details: String!
-  maxTotalSharesAtYesVote: BigInt!
+  maxTotalSharesAtYesVote: BigInt
 }
 
 type Applicant @entity {
@@ -66,15 +72,15 @@ type Member @entity {
   delegateKey: Bytes!
   shares: BigInt!
   isActive: Boolean!
-  highestIndexYesVote: BigInt!
+  highestIndexYesVote: BigInt
   tokenTribute: BigInt!
   didRagequit: Boolean!
   votes: [Vote!]!
   submissions: [Proposal!]!
 }
 
-type BankHistory @entity {
+type Meta @entity {
   id: ID!
-  molochAddress: Bytes!
-  shareValue: BigInt!
+  currentPeriod: BigInt!
+  totalShares: BigInt!
 }
