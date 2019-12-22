@@ -18,22 +18,21 @@ import { Proposal, Member, Vote, Applicant } from "./types/schema";
 import { Factory, Meta } from "../generated/schema";
 
 export function handleBlock(block: EthereumBlock): void {
-  // let molochAddress = dataSource.address();
-  // let factoryContract = Contract.bind(molochAddress);
-  // let events = factoryContract.events
-  // log.debug("molochAddress: {}", [
-  //   molochAddress.toHexString() // "0x..."
-  // ]);
-  // let contract = Contract.bind(molochAddress);
-  // let currentPeriod = contract.getCurrentPeriod();
-  // let totalShares = contract.totalShares();
-  // let meta = Meta.load(molochAddress.toHexString());
-  // if (!meta) {
-  //   meta = new Meta(molochAddress.toHexString());
-  // }
-  // meta.currentPeriod = currentPeriod;
-  // meta.totalShares = totalShares;
-  // meta.save();
+  let molochAddress = dataSource.address();
+  log.debug("molochAddress: {}", [
+    molochAddress.toHexString() // "0x..."
+  ]);
+
+  let contract = Contract.bind(molochAddress);
+  let currentPeriod = contract.getCurrentPeriod();
+  let totalShares = contract.totalShares();
+  let meta = Meta.load(molochAddress.toHexString());
+  if (!meta) {
+    meta = new Meta(molochAddress.toHexString());
+  }
+  meta.currentPeriod = currentPeriod;
+  meta.totalShares = totalShares;
+  meta.save();
 }
 
 export function handleSummonComplete(event: SummonComplete): void {
