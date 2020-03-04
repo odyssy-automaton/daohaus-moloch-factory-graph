@@ -42,6 +42,15 @@ export class Factory extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get createdAt(): string {
+    let value = this.get("createdAt");
+    return value.toString();
+  }
+
+  set createdAt(value: string) {
+    this.set("createdAt", Value.fromString(value));
+  }
+
   get index(): string | null {
     let value = this.get("index");
     if (value === null) {
@@ -149,6 +158,15 @@ export class Vote extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get createdAt(): string {
+    let value = this.get("createdAt");
+    return value.toString();
+  }
+
+  set createdAt(value: string) {
+    this.set("createdAt", Value.fromString(value));
   }
 
   get molochAddress(): Bytes {
@@ -270,6 +288,15 @@ export class Proposal extends Entity {
 
   set timestamp(value: string) {
     this.set("timestamp", Value.fromString(value));
+  }
+
+  get createdAt(): string {
+    let value = this.get("createdAt");
+    return value.toString();
+  }
+
+  set createdAt(value: string) {
+    this.set("createdAt", Value.fromString(value));
   }
 
   get proposalIndex(): BigInt {
@@ -602,6 +629,15 @@ export class Member extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get createdAt(): string {
+    let value = this.get("createdAt");
+    return value.toString();
+  }
+
+  set createdAt(value: string) {
+    this.set("createdAt", Value.fromString(value));
   }
 
   get molochAddress(): Bytes {

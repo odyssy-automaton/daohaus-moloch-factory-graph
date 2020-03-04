@@ -1,5 +1,6 @@
 type Factory @entity {
   id: ID!
+  createdAt: String!
   index: String
   count: BigInt!
   moloch: Bytes! # address
@@ -10,9 +11,10 @@ type Factory @entity {
 
 type Vote @entity {
   id: ID!
+  createdAt: String!
   molochAddress: Bytes!
-  timestamp:String!
-  proposalIndex:BigInt!
+  timestamp: String!
+  proposalIndex: BigInt!
   delegateKey: Bytes!
   memberAddress: Bytes!
   uintVote: Int!
@@ -23,7 +25,8 @@ type Vote @entity {
 type Proposal @entity {
   id: ID!
   molochAddress: Bytes!
-  timestamp:String!
+  timestamp: String!
+  createdAt: String!
   proposalIndex: BigInt!
   startingPeriod: BigInt!
   delegateKey: Bytes!
@@ -32,7 +35,7 @@ type Proposal @entity {
   applicant: Applicant!
   applicantAddress: Bytes!
   tokenTribute: BigInt!
-  sharesRequested:BigInt!
+  sharesRequested: BigInt!
   yesVotes: BigInt!
   noVotes: BigInt!
   processed: Boolean!
@@ -46,22 +49,23 @@ type Proposal @entity {
 type Applicant @entity {
   id: ID!
   molochAddress: Bytes!
-  timestamp:String!
+  timestamp: String!
   proposalIndex: BigInt!
   delegateKey: Bytes!
   member: Member!
   memberAddress: Bytes!
   applicantAddress: Bytes!
   tokenTribute: BigInt!
-  sharesRequested:BigInt!
+  sharesRequested: BigInt!
   didPass: Boolean!
   aborted: Boolean!
-  votes: [Vote!]! 
+  votes: [Vote!]!
   proposal: Proposal!
 }
 
 type Member @entity {
   id: ID!
+  createdAt: String!
   molochAddress: Bytes!
   delegateKey: Bytes!
   shares: BigInt!

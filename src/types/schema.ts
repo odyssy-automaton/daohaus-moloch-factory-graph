@@ -49,6 +49,15 @@ export class Vote extends Entity {
     this.set("timestamp", Value.fromString(value));
   }
 
+  get createdAt(): string {
+    let value = this.get("createdAt");
+    return value.toString();
+  }
+
+  set createdAt(value: string) {
+    this.set("createdAt", Value.fromString(value));
+  }
+
   get proposalIndex(): BigInt {
     let value = this.get("proposalIndex");
     return value.toBigInt();
@@ -151,6 +160,15 @@ export class Proposal extends Entity {
 
   set timestamp(value: string) {
     this.set("timestamp", Value.fromString(value));
+  }
+
+  get createdAt(): string {
+    let value = this.get("createdAt");
+    return value.toString();
+  }
+
+  set createdAt(value: string) {
+    this.set("createdAt", Value.fromString(value));
   }
 
   get proposalIndex(): BigInt {
@@ -494,6 +512,15 @@ export class Member extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get createdAt(): string {
+    let value = this.get("createdAt");
+    return value.toString();
+  }
+
+  set createdAt(value: string) {
+    this.set("createdAt", Value.fromString(value));
   }
 
   get delegateKey(): Bytes {

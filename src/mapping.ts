@@ -26,6 +26,7 @@ export function handleRegister(event: Register): void {
 
   // Entity fields can be set based on event parameters
   entity.moloch = event.params.moloch;
+  entity.createdAt = event.block.timestamp.toString();
   entity.summoner = event.params.summoner;
   entity.title = event.params.title;
   entity.index = event.params.daoIdx.toString();

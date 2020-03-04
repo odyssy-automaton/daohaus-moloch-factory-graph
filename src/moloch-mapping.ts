@@ -30,6 +30,7 @@ export function handleSummonComplete(event: SummonComplete): void {
   // let member = new Member(event.params.summoner.toHex());
   let member = new Member(memberId);
   member.molochAddress = event.address;
+  member.createdAt = event.block.timestamp.toString();
   member.delegateKey = event.params.summoner;
   member.shares = event.params.shares;
   member.isActive = true;
@@ -77,6 +78,7 @@ export function handleSubmitProposal(event: SubmitProposal): void {
   let proposal = new Proposal(proposalId);
   proposal.molochAddress = event.address;
   proposal.timestamp = event.block.timestamp.toString();
+  proposal.createdAt = event.block.timestamp.toString();
   proposal.proposalIndex = event.params.proposalIndex;
   proposal.startingPeriod = startingPeriod;
   proposal.delegateKey = event.params.delegateKey;
@@ -145,6 +147,7 @@ export function handleSubmitVote(event: SubmitVote): void {
   let vote = new Vote(voteID);
   vote.molochAddress = event.address;
   vote.timestamp = event.block.timestamp.toString();
+  vote.createdAt = event.block.timestamp.toString();
   vote.proposalIndex = event.params.proposalIndex;
   vote.delegateKey = event.params.delegateKey;
   vote.memberAddress = event.params.memberAddress;
@@ -240,6 +243,7 @@ export function handleProcessProposal(event: ProcessProposal): void {
     if (member == null) {
       let newMember = new Member(memberId);
       newMember.molochAddress = event.address;
+      newMember.createdAt = event.block.timestamp.toString();
       newMember.delegateKey = event.params.applicant;
       newMember.shares = event.params.sharesRequested;
       newMember.isActive = true;
