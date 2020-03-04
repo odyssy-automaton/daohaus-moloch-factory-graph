@@ -43,7 +43,7 @@ type Proposal @entity {
   aborted: Boolean!
   votes: [Vote!]!
   details: String!
-  maxTotalSharesAtYesVote: BigInt!
+  maxTotalSharesAtYesVote: BigInt
 }
 
 type Applicant @entity {
@@ -70,7 +70,7 @@ type Member @entity {
   delegateKey: Bytes!
   shares: BigInt!
   isActive: Boolean!
-  highestIndexYesVote: BigInt!
+  highestIndexYesVote: BigInt
   tokenTribute: BigInt!
   didRagequit: Boolean!
   votes: [Vote!]!
